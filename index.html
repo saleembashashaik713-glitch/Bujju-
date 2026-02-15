@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Secret Love AI 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff758c, #ff7eb3);
+    text-align: center;
+    color: white;
+    margin: 0;
+}
+
+#loginScreen, #mainApp {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    margin: 5px;
+}
+
+button {
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: none;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+}
+
+#chatbox {
+    width: 90%;
+    max-width: 350px;
+    height: 300px;
+    background: white;
+    color: black;
+    overflow-y: auto;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+}
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+    <h2>Enter Password 💕</h2>
+    <input type="password" id="passwordInput" placeholder="Password">
+    <button onclick="checkPassword()">Unlock 💖</button>
+    <p id="errorMsg"></p>
+</div>
+
+<div id="mainApp" style="display:none;">
+    <h2>Welcome Bujju 👑💖</h2>
+
+    <audio id="bgMusic" loop>
+      <source src="romantic.mp3" type="audio/mpeg">
+    </audio>
+
+    <button onclick="document.getElementById('bgMusic').play()">🎵 Music</button>
+
+    <div id="chatbox"></div>
+    <br>
+    <input type="text" id="userInput" placeholder="Type something...">
+    <button onclick="reply()">Send 💌</button>
+</div>
+
+<script>
+
+const correctPassword = "bujju";
+const nickName = "Bujju";
+
+function checkPassword() {
+    let entered = document.getElementById("passwordInput").value;
+
+    if (entered === correctPassword) {
+        document.getElementById("loginScreen").style.display = "none";
+        document.getElementById("mainApp").style.display = "flex";
+        speak("Swagatham na Bujju ❤️");
+        startHearts();
+    } else {
+        document.getElementById("errorMsg").innerText =
+        "Ayyoo 😜 Na Bujju ki matrame password telusu!";
+    }
+}
+
+function speak(text) {
+    let speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-IN";
+    speech.rate = 0.9;
+    speech.pitch = 1.2;
+    window.speechSynthesis.speak(speech);
+}
+
+function reply() {
+    let input = document.getElementById("userInput").value.toLowerCase();
+    let chatbox = document.getElementById("chatbox");
+
+    chatbox.innerHTML += "<p><b>" + nickName + ":</b> " + input + "</p>";
+
+    let response = "";
+
+    if (input.includes("premistunnanu") || input.includes("love")) {
+        response = "Nenu kuda ninnu chala premistunnanu Bujju ❤️";
+    }
+    else if (input.includes("badha") || input.includes("sad")) {
+        response = "Badha padaku Bujju 😔 Nenu unta kada nee pakkana 💕";
+    }
+    else if (input.includes("miss")) {
+        response = "Nenu kuda ninnu chala miss avuthunnanu Bujju 😘";
+    }
+    else {
+        let replies = [
+            "Nuvvu na life lo best gift Bujju 💖",
+            "Nee navvu chusthe na world complete ❤️",
+            "Forever natho untava Bujju? 💕"
+        ];
+        response = replies[Math.floor(Math.random() * replies.length)];
+    }
+
+    chatbox.innerHTML += "<p><b>Secret AI:</b> " + response + "</p>";
+    speak(response);
+
+    document.getElementById("userInput").value = "";
+}
+
+function startHearts() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.innerHTML = "💖";
+        document.body.appendChild(heart);
+        setTimeout(() => { heart.remove(); }, 6000);
+    }, 500);
+}
+
+</script>
+
+</body>
+</html>
